@@ -23,8 +23,9 @@ class pagesController extends Controller
     
     public function pekob()
     {
-        $data = Pekob::select('name', 'url', 'time', 'img_url')->get();
-            //return dd($image);
+        $data = Pekob::select('name', 'url', 'time', 'img', 'img_url')->get();
+        // encode binary to base64
+        $data[0]->img= 'data:image/' . 'png' . ';base64,' . base64_encode($data[0]->img);
         return view('pages.pekob')
                 ->with('list_items',$data);
     }
@@ -60,11 +61,10 @@ class pagesController extends Controller
                     $data->img_url = $temp['image'];
                     $url = $temp['image'];
                     $img = public_path('images') . '\\'.$req->name.'.jpg';
-                    file_put_contents($img, file_get_contents($url));
+                    $data->img = file_get_contents($url);
                 }
 
                 $data->url = $temp_url;
-               // return dd($data);
                 if($data->name == null || $data->url == null){
                     return view('pages.index');
                 }
