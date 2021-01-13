@@ -22,7 +22,7 @@
             @foreach ($data_tables as $item)
             <tr>
                    <td>{{ $item->name }}</td>
-                   <td>{{ $item->url }}</td>
+                   <td><a href = {{ $item->url }}>{{ $item->url }}</a></td>
                    <td>{{ $item->time }}</td>
             </tr>
            @endforeach

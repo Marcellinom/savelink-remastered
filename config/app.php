@@ -161,6 +161,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        /*
+        ----shwezi Opengraph API??
+        */
+        shweshi\OpenGraph\Providers\OpenGraphProvider::class,
 
         /*
          * Package Service Providers...
@@ -226,7 +230,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        // OG API Shwezi
+        'OpenGraph' => shweshi\OpenGraph\Facades\OpenGraphFacade::class,
     ],
 
 ];

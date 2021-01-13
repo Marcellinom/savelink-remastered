@@ -19,10 +19,18 @@
              </tr>
         </thead>
         <tbody>
-            @foreach ($data_tables as $item)
+            @foreach ($list_items as $item)
             <tr>
                    <td>{{ $item->name }}</td>
-                   <td>{{ $item->url }}</td>
+                   <td>
+                   @if($isTouch = isset($item->img_url))
+                        <a href = {{ $item->url }}>  
+                        <img src = {{$item->img_url }} width ="300px;" height="210px" atl="Image"> 
+                   @else
+                        <a href = {{ $item->url }}>{{ $item->url }}</a>
+                   @endif
+                   </td>
+               
                    <td>{{ $item->time }}</td>
             </tr>
            @endforeach
