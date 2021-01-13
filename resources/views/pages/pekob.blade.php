@@ -25,7 +25,7 @@
                    <td>
                    @if($isTouch = isset($item->img_url))
                         <a href = {{ $item->url }}>  
-                        <img src = {{$item->img_url }} width ="300px;" height="210px" atl="Image"> 
+                        <img src="{{url('/images/'.$item->name.'.jpg')}}" alt="Image" width ="300px;" height="210px" atl="Image"> 
                    @else
                         <a href = {{ $item->url }}>{{ $item->url }}</a>
                    @endif

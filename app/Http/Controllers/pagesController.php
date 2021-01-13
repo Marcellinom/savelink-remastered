@@ -58,6 +58,9 @@ class pagesController extends Controller
                 } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){   
                     $temp = OpenGraph::fetch($req->url);   
                     $data->img_url = $temp['image'];
+                    $url = $temp['image'];
+                    $img = public_path('images') . '\\'.$req->name.'.jpg';
+                    file_put_contents($img, file_get_contents($url));
                 }
 
                 $data->url = $temp_url;
