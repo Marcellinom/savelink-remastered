@@ -17,7 +17,7 @@ class CreateSchoolsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('url');
-            $table->timestamp('time')->nullable()->useCurrent();
+            $table->timestamp('time')->useCurrent();
         });
     }
 

@@ -18,7 +18,7 @@ class CreatePekobsTable extends Migration
             $table->string('name');
             $table->string('url');
             $table->string('img_url')->nullable();
-            $table->timestamp('time')->nullable()->useCurrent();
+            $table->timestamp('time')->useCurrent();
         });
     }
 
