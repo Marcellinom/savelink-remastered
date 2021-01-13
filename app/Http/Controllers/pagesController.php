@@ -60,6 +60,7 @@ class pagesController extends Controller
                     $temp = OpenGraph::fetch($req->url);   
                     $data->img_url = $temp['image'];
                 }
+
                 $data->url = $temp_url;
                // return dd($data);
                 if($data->name == null || $data->url == null){
