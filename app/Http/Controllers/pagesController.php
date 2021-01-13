@@ -36,7 +36,6 @@ class pagesController extends Controller
                 $data = new School;
                 $data->name = $req->name;
                 $data->url = $req->url;
-                $data->time = $req->time->useCurrent();
 
                 if($data->name == null || $data->url == null){
                     return view('pages.index');
@@ -49,7 +48,6 @@ class pagesController extends Controller
             case 'pekob-btn':
                 $data = new Pekob;
                 $data->name = $req->name;
-                $data->time = $req->time;
                 $temp_url = $req->url;
                 
                 if(is_numeric($req->url)){
