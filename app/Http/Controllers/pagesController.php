@@ -23,7 +23,7 @@ class pagesController extends Controller
     
     public function pekob()
     {
-        $data = Pekob::select('name', 'url', 'time', 'img_url', 'img')->get();
+        $data = Pekob::select('name', 'url', 'time', 'img_url')->get();
             //return dd($image);
         return view('pages.pekob')
                 ->with('list_items',$data);
