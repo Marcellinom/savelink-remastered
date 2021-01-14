@@ -60,7 +60,7 @@ class pagesController extends Controller
                     $temp_img = file_get_contents($temp['image']);
                     $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
 
-                } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){   
+                } else if(str_contains($req->url, "nhentai") || str_contains($req->url, "youtube") || str_contains($req->url, "pixiv")){   
                     $temp = OpenGraph::fetch($req->url);   
                     $data->img_url = $temp['image'];
                     // $url = $temp['image'];

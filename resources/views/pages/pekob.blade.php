@@ -24,7 +24,7 @@
                    <td>{{ $item->name }}</td>
                    <td>
                    @if($isTouch = isset($item->img_url))
-                        <a href = {{ $item->url }}>
+                   <a onclick="window.open(this.href); return false;" href = {{ $item->url }}>
                         <img src={{ $item->img }} alt="Image" width ="300px;" height="210px" atl="Image">
                    @else
                         <a href = {{ $item->url }}>{{ $item->url }}</a>
