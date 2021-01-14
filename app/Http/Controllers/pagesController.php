@@ -38,24 +38,28 @@ class pagesController extends Controller
             case 'school-btn':
                 $data = new School;
                 $data->name = $req->name;
-                
-                if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){   
+                $data->url = $req->url;
+                if(str_contains($req->url, "youtube.com/watch?v=")){
+                    $data->url = str_replace("watch?v=","embed/",$req->url);
+                }
+                else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){   
                     $temp = OpenGraph::fetch($req->url);
+                    
                     if(!empty($temp['image'])){
-                        // $img = public_path('images') . '\\'.$req->name.'.jpg';
+                        //filling img_url table with image link
                         $data->img_url = $temp['image'];
                         //gets binary image
                         $temp_img = file_get_contents($temp['image']);
                         //convert to base64
                         $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
                     }   
+                    
                 }
                 
-                $data->url = $req->url;
                 if($data->name == null || $data->url == null){
                     return view('pages.index');
                 }
-
+                
                 $data->save();
                 return redirect('');
                 break;
@@ -63,35 +67,43 @@ class pagesController extends Controller
             case 'pekob-btn':
                 $data = new Pekob;
                 $data->name = $req->name;
-                $temp_url = $req->url;
-                
+                $data->url = $req->url;
                 if(is_numeric($req->url)){
-                    $temp_url = "https://nhentai.net/g/".$temp_url;
+                    $temp_url = "https://nhentai.net/g/".$req->url;
+                    $data->url = $temp_url;
                     $temp = OpenGraph::fetch($temp_url);
+
                     if(!empty($temp['image'])){
+                        //filling img_url table with image link
                         $data->img_url = $temp['image'];
                         //gets binary image
                         $temp_img = file_get_contents($temp['image']);
                         //convert to base64
                         $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
+                    }  
+
+                } else if(str_contains($req->url, "youtube.com/watch?v=")){
+                    $data->url = str_replace("watch?v=","embed/",$req->url);
+                    
+                } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")) {   
+                    $temp = OpenGraph::fetch($req->url);
+
+                    if(!empty($temp['image'])){
+                        //filling img_url table with image link
+                        $data->img_url = $temp['image'];
+                        //gets binary image
+                        $temp_img = file_get_contents($temp['image']);
+                        //convert to base64
+                        $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
+                        return dd($temp);
                     }   
 
-                } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){   
-                    $temp = OpenGraph::fetch($req->url);
-                    if(!empty($temp['image'])){
-                        // $img = public_path('images') . '\\'.$req->name.'.jpg';
-                        $data->img_url = $temp['image'];
-                        //gets binary image
-                        $temp_img = file_get_contents($temp['image']);
-                        //convert to base64
-                        $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
-                    }   
                 }
 
-                $data->url = $temp_url;
                 if($data->name == null || $data->url == null){
                     return view('pages.index');
                 }
+
                 $data->save();
                 return redirect('');
                 break;
@@ -99,11 +111,4 @@ class pagesController extends Controller
     }
 }
 
-/*
-if(str_contains($req->url, "savelink")) {
-                    $data->url = OpenGraph::fetch($req->url);
-                    return ($data->title);  // task= returning the image link
-                } else {
-
-                }
-*/
+// $img = public_path('images') . '\\'.$req->name.'.jpg';

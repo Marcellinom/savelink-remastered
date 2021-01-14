@@ -23,12 +23,21 @@
             <tr>
                    <td>{{ $item->name }}</td>
                    <td>
-                   @if($isTouch = isset($item->img_url))
-                   <a onclick="window.open(this.href); return false;" href = {{ $item->url }}>
-                        <img src={{ $item->img }} alt="Image" width ="300px;" height="210px" atl="Image">
-                   @else
-                        <a href = {{ $item->url }}>{{ $item->url }}</a>
-                   @endif
+                   <?php if(str_contains($item->url, "youtube.com/embed/")) : ?>
+                            <iframe src={{$item->url}} width ="300px;" height="210px" 
+                            allowfullscreen="allowfullscreen"
+                            mozallowfullscreen="mozallowfullscreen" 
+                            msallowfullscreen="msallowfullscreen" 
+                            oallowfullscreen="oallowfullscreen" 
+                            webkitallowfullscreen="webkitallowfullscreen"></iframe>
+
+                        <?php elseif($isTouch = isset($item->img_url)) : ?>
+                                <a onclick="window.open(this.href); return false;" href = {{ $item->url }}>
+                                <img src={{ $item->img }} alt="Image" width ="300px;" height="210px" atl="Image">
+                        
+                        <?php else : ?>
+                                <a href = {{ $item->url }}>{{ $item->url }}</a>
+                        <?php endif; ?>
                    </td>
                    <td>{{ $item->time }}</td>
             </tr>
