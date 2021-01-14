@@ -22,7 +22,14 @@
             @foreach ($data_tables as $item)
             <tr>
                    <td>{{ $item->name }}</td>
-                   <td><a href = {{ $item->url }}>{{ $item->url }}</a></td>
+                   <td>
+                   @if($isTouch = isset($item->img_url))
+                   <a onclick="window.open(this.href); return false;" href = {{ $item->url }}>
+                        <img src={{ $item->img }} alt="Image" width ="300px;" height="210px" atl="Image">
+                   @else
+                        <a href = {{ $item->url }}>{{ $item->url }}</a>
+                   @endif
+                   </td>
                    <td>{{ $item->time }}</td>
             </tr>
            @endforeach

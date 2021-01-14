@@ -16,7 +16,7 @@ class pagesController extends Controller
     
     public function school()
     {
-        $data = School::select('name', 'url', 'time')->get();
+        $data = School::select('name', 'url', 'time', 'img', 'img_url')->get();
        // return dd($data);
         return view('pages.school')->with('data_tables',$data);
     }
@@ -38,8 +38,20 @@ class pagesController extends Controller
             case 'school-btn':
                 $data = new School;
                 $data->name = $req->name;
+                
+                if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){   
+                    $temp = OpenGraph::fetch($req->url);
+                    if(!empty($temp['image'])){
+                        // $img = public_path('images') . '\\'.$req->name.'.jpg';
+                        $data->img_url = $temp['image'];
+                        //gets binary image
+                        $temp_img = file_get_contents($temp['image']);
+                        //convert to base64
+                        $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
+                    }   
+                }
+                
                 $data->url = $req->url;
-
                 if($data->name == null || $data->url == null){
                     return view('pages.index');
                 }
