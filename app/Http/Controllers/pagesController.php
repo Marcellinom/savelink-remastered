@@ -57,8 +57,6 @@ class pagesController extends Controller
                     $temp_url = "https://nhentai.net/g/".$temp_url;
                     $temp = OpenGraph::fetch($temp_url);
                     $data->img_url = $temp['image'];
-                    $temp_img = file_get_contents($temp['image']);
-                    $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
 
                 } else if(str_contains($req->url, "nhentai") || str_contains($req->url, "youtube") || str_contains($req->url, "pixiv")){   
                     $temp = OpenGraph::fetch($req->url);   
