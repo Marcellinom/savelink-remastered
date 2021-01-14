@@ -56,15 +56,24 @@ class pagesController extends Controller
                 if(is_numeric($req->url)){
                     $temp_url = "https://nhentai.net/g/".$temp_url;
                     $temp = OpenGraph::fetch($temp_url);
-                    $data->img_url = $temp['image'];
+                    if(!empty($temp['image'])){
+                        $data->img_url = $temp['image'];
+                        //gets binary image
+                        $temp_img = file_get_contents($temp['image']);
+                        //convert to base64
+                        $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
+                    }   
 
-                } else if(str_contains($req->url, "nhentai") || str_contains($req->url, "youtube") || str_contains($req->url, "pixiv")){   
-                    $temp = OpenGraph::fetch($req->url);   
-                    $data->img_url = $temp['image'];
-                    // $url = $temp['image'];
-                    // $img = public_path('images') . '\\'.$req->name.'.jpg';
-                    $temp_img = file_get_contents($temp['image']);
-                    $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
+                } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){   
+                    $temp = OpenGraph::fetch($req->url);
+                    if(!empty($temp['image'])){
+                        // $img = public_path('images') . '\\'.$req->name.'.jpg';
+                        $data->img_url = $temp['image'];
+                        //gets binary image
+                        $temp_img = file_get_contents($temp['image']);
+                        //convert to base64
+                        $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
+                    }   
                 }
 
                 $data->url = $temp_url;
