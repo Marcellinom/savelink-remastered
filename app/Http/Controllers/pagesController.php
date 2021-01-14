@@ -95,7 +95,6 @@ class pagesController extends Controller
                         $temp_img = file_get_contents($temp['image']);
                         //convert to base64
                         $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
-                        return dd($temp);
                     }   
 
                 }
