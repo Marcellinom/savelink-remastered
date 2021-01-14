@@ -25,9 +25,9 @@ class pagesController extends Controller
     {
         $data = Pekob::select('name', 'url', 'time', 'img', 'img_url')->get();
         // encode binary to base64
-        foreach($data as $item){
-            $item->img= 'data:image/' . 'png' . ';base64,' . base64_encode($item->img);
-        }
+        // foreach($data as $item){
+        //     $item->img= 'data:image/' . 'png' . ';base64,' . base64_encode($item->img);
+        // }
             return view('pages.pekob')
                 ->with('list_items',$data);
     }
@@ -57,13 +57,16 @@ class pagesController extends Controller
                     $temp_url = "https://nhentai.net/g/".$temp_url;
                     $temp = OpenGraph::fetch($temp_url);
                     $data->img_url = $temp['image'];
+                    $temp_img = file_get_contents($temp['image']);
+                    $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
 
                 } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){   
                     $temp = OpenGraph::fetch($req->url);   
                     $data->img_url = $temp['image'];
                     // $url = $temp['image'];
                     // $img = public_path('images') . '\\'.$req->name.'.jpg';
-                    $data->img = file_get_contents($temp['image']);
+                    $temp_img = file_get_contents($temp['image']);
+                    $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
                 }
 
                 $data->url = $temp_url;
