@@ -40,6 +40,8 @@ class pagesController extends Controller
                 $data->name = $req->name;
                 $data->url = $req->url;
                 if(str_contains($req->url, "youtube.com/watch?v=")){
+                    $temp = OpenGraph::fetch($req->url);
+                    $data->name = $temp['title'];
                     $data->url = str_replace("watch?v=","embed/",$req->url);
                 }
                 else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){   
@@ -68,6 +70,7 @@ class pagesController extends Controller
                 $data = new Pekob;
                 $data->name = $req->name;
                 $data->url = $req->url;
+
                 if(is_numeric($req->url)){
                     $temp_url = "https://nhentai.net/g/".$req->url;
                     $data->url = $temp_url;
@@ -81,13 +84,17 @@ class pagesController extends Controller
                         //convert to base64
                         $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
                     }  
+                    if(!empty($temp['title'])){
+                        $data->name = $temp['title'];
+                    }
 
                 } else if(str_contains($req->url, "youtube.com/watch?v=")){
+                    $temp = OpenGraph::fetch($req->url);
+                    $data->name = $temp['title'];
                     $data->url = str_replace("watch?v=","embed/",$req->url);
                     
                 } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")) {   
                     $temp = OpenGraph::fetch($req->url);
-
                     if(!empty($temp['image'])){
                         //filling img_url table with image link
                         $data->img_url = $temp['image'];
@@ -96,7 +103,9 @@ class pagesController extends Controller
                         //convert to base64
                         $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
                     }   
-
+                    if(!empty($temp['title'])){
+                        $data->name = $temp['title'];
+                    }
                 }
 
                 if($data->name == null || $data->url == null){
