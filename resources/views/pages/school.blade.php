@@ -7,12 +7,9 @@
 <div>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
-<script type="text/js" src="js/app.js"></script>
+
 <div class="container">
-<h1 class="mt-4 mb-4">School Links</h2>
+<h1 class="mt-4 mb-4">School Links</h1>
 <div class="table-responsive">
 
     <table id="tabel" class="table table-striped table-bordered">
