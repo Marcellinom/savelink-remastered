@@ -17,17 +17,12 @@ class pagesController extends Controller
     public function school()
     {
         $data = School::select('name', 'url', 'time', 'img', 'img_url')->get();
-       // return dd($data);
         return view('pages.school')->with('data_tables',$data);
     }
     
     public function pekob()
     {
         $data = Pekob::select('name', 'url', 'time', 'img', 'img_url')->get();
-        // encode binary to base64
-        // foreach($data as $item){
-        //     $item->img= 'data:image/' . 'png' . ';base64,' . base64_encode($item->img);
-        // }
             return view('pages.pekob')
                 ->with('list_items',$data);
     }
@@ -50,8 +45,10 @@ class pagesController extends Controller
                     if(!empty($temp['image'])){
                         //filling img_url table with image link
                         $data->img_url = $temp['image'];
+
                         //gets binary image
                         $temp_img = file_get_contents($temp['image']);
+
                         //convert to base64
                         $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
                     }   
@@ -79,8 +76,10 @@ class pagesController extends Controller
                     if(!empty($temp['image'])){
                         //filling img_url table with image link
                         $data->img_url = $temp['image'];
+
                         //gets binary image
                         $temp_img = file_get_contents($temp['image']);
+
                         //convert to base64
                         $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
                     }  
@@ -90,7 +89,9 @@ class pagesController extends Controller
 
                 } else if(str_contains($req->url, "youtube.com/watch?v=")){
                     $temp = OpenGraph::fetch($req->url);
+
                     $data->name = $temp['title'];
+                    
                     $data->url = str_replace("watch?v=","embed/",$req->url);
                     
                 } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")) {   
@@ -98,8 +99,10 @@ class pagesController extends Controller
                     if(!empty($temp['image'])){
                         //filling img_url table with image link
                         $data->img_url = $temp['image'];
+
                         //gets binary image
                         $temp_img = file_get_contents($temp['image']);
+
                         //convert to base64
                         $data->img= 'data:image/' . 'png' . ';base64,' . base64_encode($temp_img);
                     }   
