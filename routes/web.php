@@ -14,7 +14,7 @@ use App\Http\Controllers\pagesController;
 */
 
 Route::get('/', function () {
-    return view('pages.index');
+    return view('pages.home');
 });
 Route::post('', [pagesController::Class,'input_table']);
 Route::get('/school', [pagesController::Class,'school']);

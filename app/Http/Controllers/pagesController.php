@@ -11,13 +11,14 @@ class pagesController extends Controller
 {
     public function home()
     {
-        return view('pages.index');
+        return view('pages.home');
     }
     
     public function school()
     {
+        
         $data = School::select('name', 'url', 'time', 'img', 'img_url')->get();
-        return view('pages.school')->with('data_tables',$data);
+        return view('pages.school')->with('list_items',$data);
     }
     
     public function pekob()
@@ -58,12 +59,20 @@ class pagesController extends Controller
                 if($data->name == null || $data->url == null){
                     return view('pages.index');
                 }
-                
+                    if($data->name == null && $data->url == null){
+                        return redirect()->back()->with('alert', "please insert data!");
+                    }
+                    if($data->url == null){
+                        return redirect()->back()->with('alert', "please insert a link!");
+                    }
+                    if($data->name == null){
+                        return redirect()->back()->with('alert', "uh-oh! - You'll have to insert the title for this one!");
+                    }
                 $data->save();
                 return redirect('');
                 break;
 
-            case 'pekob-btn':
+            case 'pekob-btn'://---------------------------------------------------------------------
                 $data = new Pekob;
                 $data->name = $req->name;
                 $data->url = $req->url;
@@ -110,11 +119,15 @@ class pagesController extends Controller
                         $data->name = $temp['title'];
                     }
                 }
-
-                if($data->name == null || $data->url == null){
-                    return view('pages.index');
-                }
-
+                    if($data->name == null && $data->url == null){
+                        return redirect()->back()->with('alert', "please insert data!");
+                    }
+                    if($data->url == null){
+                        return redirect()->back()->with('alert', "please insert a link!");
+                    }
+                    if($data->name == null){
+                        return redirect()->back()->with('alert', "uh-oh! - You'll have to insert the title for this one!");
+                    }
                 $data->save();
                 return redirect('');
                 break;
