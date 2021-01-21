@@ -19,45 +19,39 @@
     <div class="container">
       <nav class="navbar navbar-light bg-#323652">
         <form class="container-fluid justify-content-start">
-          @if(basename($_SERVER['PHP_SELF']) != ('pekob') && basename($_SERVER['PHP_SELF']) != ('school'))
-          <button class="btn active btn-outline-success me-1" type="button">
-            <a class="nav-link active" id="schoolBtn" aria-current="page" href="{{ url('/') }}">
-              <t style="color:white ">
-                Home
-              </t>
-            </a>
-          @else
-          <button class="btn btn-outline-success me-1" type="button">
-          <a class="nav-link active" id="schoolBtn" aria-current="page" href="{{ url('/') }}">
-              <t style="color:green ">
-                Home
-              </t>
-            </a>
-          @endif
-            
-          </button>
-          @if(basename($_SERVER['PHP_SELF']) == ('school'))
-          <button class="btn btn-sm active btn-outline-secondary" type="button">
-          @else
-          <button class="btn btn-sm btn-outline-secondary" type="button">
-          @endif
+<!-- ---------------------------------------------------------------------------------------------------------------------->        
+            <button class="btn btn-outline-success me-2 {{ request()->routeIs('home')?'active':''}}" type="button">
+              <a class="nav-link active" id="schoolBtn" aria-current="page" href="{{ url('/') }}">
+                <t style="color:{{ request()->routeIs('home')?'white':'black'}} ">
+                  Home
+                </t>
+              </a>
+            </button>
+<!-- ---------------------------------------------------------------------------------------------------------------------->
+            <button class="btn btn-sm btn-outline-primary me-1 {{ request()->routeIs('user.school')?'active':''}}" type="button">
             <a class="nav-link active" id="schoolBtn" aria-current="page" href="{{ url('/school') }}">
-              <t style="color:black">
-                School
-              </t>
-            </a>
-          </button>
-          @if(basename($_SERVER['PHP_SELF']) == ('pekob'))
-          <button class="btn btn-sm active btn-outline-secondary" type="button">
-          @else
-          <button class="btn btn-sm btn-outline-secondary" type="button">
-          @endif
+                <t style="color:{{ request()->routeIs('user.school')?'white':'black'}}">
+                  School
+                </t>
+              </a>
+            </button>
+<!-- ---------------------------------------------------------------------------------------------------------------------->
+            <button class="btn btn-sm btn-outline-danger me-2 {{ request()->routeIs('user.pekob')?'active':''}}" type="button">
             <a class="nav-link active" id="pekobBtn" aria-current="page" href="{{ url('/pekob') }}">  
-              <t style="color:black">
-                Pekob
-              </t>
-            </a>
-          </button>
+                <t style="color:{{ request()->routeIs('user.pekob')?'white':'black'}}">
+                  Pekob
+                </t>
+              </a>
+            </button>
+ <!-- ---------------------------------------------------------------------------------------------------------------------->           
+            <button class="btn btn-outline-warning me-1 {{ request()->routeIs('admin')?'active':''}}" type="button">
+            <a class="nav-link active" id="pekobBtn" aria-current="page" href="{{ url('/admin') }}">  
+                <t style="color:{{ request()->routeIs('admin')?'white':'black'}}">
+                  Admin
+                </t>
+              </a>
+            </button>
+<!-- ---------------------------------------------------------------------------------------------------------------------->            
         </form>
       </nav>
     </div>
