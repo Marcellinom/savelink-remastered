@@ -25,7 +25,7 @@
                         </div>
                         <div>
                             <button class="add-tag btn btn-outline-success  ">
-                                <span class="glyphicon glyphicon-star"></span>
+                                +<span class="glyphicon glyphicon-star"></span>
                             </button>
                         </div>
                     </div>
