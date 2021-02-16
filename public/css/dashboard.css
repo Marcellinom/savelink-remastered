@@ -1,0 +1,25 @@
+.custom.bg-header {
+    background-color: #3a3a50;
+}
+.custom.bg-body {
+    background-color: #332f2d;
+}
+.horizontal-scroll-wrapper{
+    width: 100px;
+    height: 900px;
+    overflow-x:hidden;
+    transform: rotate(-90deg) translateY(-100px);
+    transform-origin: right top;
+}
+.horizontal-scroll-wrapper > div {
+    width: 100px;
+    height: 100px;
+    transform: rotate(90deg);
+    transform-origin: right top;
+}
+.horizontal-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.add-tag.btn.btn-outline-success {
+    border-radius: 50%;
+}
