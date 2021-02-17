@@ -2,8 +2,11 @@
 
 namespace App\View\Components;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
-
+use Illuminate\Http\Request;
+use App\Models\Main;
+use App\Models\Tag;
 class AppLayout extends Component
 {
     /**
