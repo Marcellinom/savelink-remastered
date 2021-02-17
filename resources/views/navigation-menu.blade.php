@@ -21,7 +21,7 @@
                         @if(isset($data))
                         @foreach($data as $tag)
                         <div>
-                            <x-jet-nav-link href="{{ route('view', ['tag' => $tag])}}" class="btn btn-outline-danger">
+                            <x-jet-nav-link href="{{ route('view', ['tag' => $tag])}}" class="desktop btn btn-outline-danger">
                                 {{ $tag }}
                             </x-jet-nav-link>
                         </div>
@@ -120,7 +120,7 @@
                                 {{ __('Manage Account') }}
                             </div>
 
-                            <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                            <x-jet-dropdown-link href="{{ route('account') }}">
                                 {{ __('Profile') }}
                             </x-jet-dropdown-link>
 
@@ -165,7 +165,7 @@
 <div class="header">
     <div class="nav-link collapsed" style="text-align:center;">
         <a class="btn btn-outline-danger" data-toggle="collapse" href="#collapseTag" style="width:300px;">
-            <b> Explore Tag</b>
+            <b> Explore </b>
         </a>
      </div>
         <div class="collapse-card" style="background-color: transparent;">
@@ -196,9 +196,16 @@
         </div>
         </div>
         </div>
-</div>
-</div>
-        <!-- Responsive Settings Options -->
+        
+    <div class="nav-link collapsed" style="text-align:center;">
+        <a class="btn btn-outline-danger" data-toggle="collapse" href="#collapseAccount" style="width:300px;">
+            <b> Account </b>
+        </a>
+    </div>
+        <div class="collapse-card" style="background-color: transparent;">
+        <div id="collapseAccount" class="collapse" data-parent="#accordion">
+        <div class="card border-left-success shadow" style="background-color: #512528;">
+            <!-- Responsive Settings Options -->
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="flex-shrink-0 mr-3">
@@ -214,7 +221,7 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
-                <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                <x-jet-responsive-nav-link href="{{ route('account') }}" :active="request()->routeIs('profile.show')" class="text-sm text-white">
                     {{ __('Profile') }}
                 </x-jet-responsive-nav-link>
 
@@ -228,7 +235,8 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-jet-responsive-nav-link href="{{ route('logout') }}"
+                    <x-jet-responsive-nav-link class="text-sm text-white" 
+                                    href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                     this.closest('form').submit();">
                         {{ __('Logout') }}
@@ -266,6 +274,10 @@
                     @endforeach
                 @endif
             </div>
-        
+        </div>
+        </div>
+        </div>
+    </div>
+    </div>    
     </div>
 </nav>

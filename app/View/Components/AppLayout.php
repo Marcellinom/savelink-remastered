@@ -15,7 +15,13 @@ class AppLayout extends Component
      * @return \Illuminate\View\View
      */
     public function render()
-    {
-        return view('layouts.app');
+    {   $tags = Tag::select('tags')
+                   ->where('user_id', request()->user()->id)
+                   ->get();
+        $data = [];
+        foreach($tags as $i=>$tag){
+            $data[$i] = $tag->tags;
+        }
+        return view('layouts.app')->with('data',$data);
     }
 }

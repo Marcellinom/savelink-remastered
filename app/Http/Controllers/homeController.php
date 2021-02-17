@@ -19,6 +19,17 @@ class homeController extends Controller
         // return dd($data);
         return view('dashboard')->with('data',$data);
     }
+    public function account()
+    {  
+        $tags = Tag::select('tags')
+                   ->where('user_id', request()->user()->id)
+                   ->get();
+        $data = [];
+        foreach($tags as $i=>$tag){
+            $data[$i] = $tag->tags;
+        }
+        return view('account')->with('data',$data);
+    }
     public function addTag(Request $req)
     {   
         // return dd(request()->user());

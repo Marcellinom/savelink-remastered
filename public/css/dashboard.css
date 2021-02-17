@@ -17,6 +17,9 @@
     transform: rotate(90deg);
     transform-origin: right top;
 }
+.desktop.btn.btn-outline-danger {
+    width:80px;
+}
 .horizontal-scroll-wrapper::-webkit-scrollbar {
   display: none;
 }
@@ -40,6 +43,9 @@
     border-radius: 50%;
 }
 .input.bg-color {
+    background-color: #3a3a50;
+}
+.card.bg-color {
     background-color: #3a3a50;
 }
 .custom-select {

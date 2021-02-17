@@ -22,6 +22,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return redirect()->route('home');
     });
     Route::get('/home', [homeController::class, 'index'])->name('home');
+    Route::get('/account', [homeController::class, 'account'])->name('account');
     Route::post('input', [inputController::Class,'input_table']);
     Route::get('view/{tag}', [homeController::class,'view'])->name('view');
     Route::post('/addTag', [homeController::class, 'addTag'])->name('addTag');
