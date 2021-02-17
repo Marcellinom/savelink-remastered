@@ -15,13 +15,15 @@ class AppLayout extends Component
      * @return \Illuminate\View\View
      */
     public function render()
-    {   $tags = Tag::select('tags')
-                   ->where('user_id', request()->user()->id)
-                   ->get();
-        $data = [];
-        foreach($tags as $i=>$tag){
-            $data[$i] = $tag->tags;
-        }
-        return view('layouts.app')->with('data',$data);
+    {   
+        // $tags = Tag::select('tags')
+        //            ->where('user_id', request()->user()->id)
+        //            ->get();
+        // $data = [];
+        // foreach($tags as $i=>$tag){
+        //     $data[$i] = $tag->tags;
+        // }
+        // return view('layouts.app')->with('data',$data);
+        return view('layouts.app');
     }
 }
