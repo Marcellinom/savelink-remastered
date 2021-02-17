@@ -40,4 +40,32 @@ class homeController extends Controller
         $add->save();
         return redirect()->back();
     }
+    public function view($tag)
+    {
+// navbar data
+//-----------------------------------------------------------------------
+        $nav_types = Tag::select('tags')
+                   ->where('user_id', request()->user()->id)
+                   ->get();
+        $tab = [];
+        foreach($nav_types as $i=>$nav_type){
+            $tab[$i] = $nav_type->tags;
+        }
+//-----------------------------------------------------------------------
+        $id = Auth::user()->id;
+        $data = Main::select('name','url','time','img_url')
+                    ->where('user_id',$id)
+                    ->where('type',$tag)
+                    ->get();
+         if(!Tag::where('user_id',$id)
+                ->where('tags', '=', $tag)
+                ->exists())
+        {
+            return redirect()->guest('home');
+        }
+        return view('driver')
+             ->with('list_items',$data)
+             ->with('title', $tag)
+             ->with('data',$tab);
+    }
 }

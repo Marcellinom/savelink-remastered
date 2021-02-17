@@ -17,12 +17,18 @@ class inputController extends Controller
                 $data = new Main;
                 if(str_contains($req->url, "youtube.com/watch?v=")){
                     $temp = OpenGraph::fetch($req->url);
-                    $data->name = $temp['title'];
+                    if(isset($temp['title'])){
+                        $data->name = $temp['title'];
+                    }
                     $data->url = str_replace("watch?v=","embed/",$req->url);
                 } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){
                     $temp = OpenGraph::fetch($req->url);
-                    $data->name = $temp['title'];
-                    $data->img_url = $temp['image'];
+                    if(isset($temp['title'])){
+                        $data->name = $temp['title'];
+                    }
+                    if(isset($temp['image'])){
+                        $data->img_url = $temp['image'];
+                    }
                 }
                 if($req->name) {
                     $data->name = $req->name;
