@@ -63,3 +63,14 @@
     font-size:30px;
     color:red;
 }
+.custom.table-responsive >button{
+    float:right;
+}
+.btn-circle.btn-sm { 
+    width: 20px; 
+    height: 20px; 
+    padding: 6px 0px; 
+    border-radius: 15px; 
+    font-size: 8px; 
+    text-align: center; 
+} 

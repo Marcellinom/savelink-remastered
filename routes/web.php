@@ -23,7 +23,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     Route::get('/home', [homeController::class, 'index'])->name('home');
     Route::get('/account', [homeController::class, 'account'])->name('account');
-    Route::post('input', [inputController::Class,'input_table']);
     Route::get('view/{tag}', [homeController::class,'view'])->name('view');
+    Route::post('input', [inputController::Class,'input_table']);
     Route::post('/addTag', [homeController::class, 'addTag'])->name('addTag');
+    Route::post('/delete', [inputController::Class,'delete'])->name('delete');
+    Route::post('/edit', [inputController::Class,'edit'])->name('edit');
+    Route::post('/purge', [inputController::Class,'purge'])->name('purge');
 });

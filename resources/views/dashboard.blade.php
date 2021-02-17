@@ -17,6 +17,8 @@
                       </span>
                     </div>
 @endif
+
+<img src="{{asset('img/logo.png')}}" width="300px">
         <form action="/input" method="post">
           @csrf
           <div class="row">
@@ -26,12 +28,6 @@
                 </div>
                 <div class="input-url">
                   <input class="custom-input" type="text" placeholder="url" name="url"></input>
-                </div>
-                <div class="input-button">
-                  <button 
-                  type="submit" 
-                  class="btn btn-outline-success mt-2.5" 
-                  style="padding: 5px 31px;">Save Link!</button>
                 </div>
                 <div>
                   <select 
@@ -46,6 +42,12 @@
                   @endif
                     <option value="Add-Tag">Add Tag</option> <!-- Trigger Modal -->
                   </select>
+                </div>
+                <div class="input-button">
+                  <button 
+                  type="submit" 
+                  class="btn btn-outline-success mt-2.5" 
+                  style="padding: 5px 31px;">Save Link!</button>
                 </div>
            </div>
         </form>  

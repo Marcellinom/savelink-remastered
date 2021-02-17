@@ -1,11 +1,80 @@
 @extends('layouts/app')
 @section('content')
 <div class="main-body py-12">
-        <div style="card bg-table">
-            <div class="p-2 sm:px-20 view bg-color shadow">
+    <div style="card bg-table">
+        <div class="p-2 sm:px-20 view bg-color shadow t">
             <div class="custom table-responsive text-white">
-
-
+                <button type="button" class="btn btn-success ml-2 btn-circle btn-sm"
+                data-toggle="modal" data-target="#{{str_replace(" ","-",$title)}}purge"></button>
+                <button type="button" class="btn btn-warning ml-2 btn-circle btn-sm"
+                data-toggle="modal" data-target="#{{str_replace(" ","-",$title)}}edit"></button>
+                <button type="button" 
+                class="btn btn-danger ml-2 btn-circle btn-sm" 
+                data-toggle="modal" data-target="#{{str_replace(" ","-",$title)}}delete"></button>
+<!-- Delete -->
+<form action="/delete" method="post">
+@csrf
+    <div class="modal fade" id="{{str_replace(" ","-",$title)}}delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="alert alert-danger" role="alert">
+                Are you sure you wan't to<br><strong> DELETE <u>{{$title}}</u> Tab?</strong>
+                <input type="hidden" value="{{$title}}" name="tag">
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</form>
+<!-- Edit -->
+<form action="/edit" method="post">
+@csrf
+            <div class="modal fade" id="{{str_replace(" ","-",$title)}}edit" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h class="text-black">Edit Tag Name</h>
+                  </div>
+                  <div class="modal-body">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Input New Tag</span>
+                    </div>
+                    <input type="text" class="form-control" name="new"></input>
+                    <input type="hidden" name="old" value="{{$title}}"></input>
+                  </div>
+                  </div>
+                  <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+</form>
+<!-- Purge -->
+<form action="/purge" method="post">
+@csrf
+    <div class="modal fade" id="{{str_replace(" ","-",$title)}}purge" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="alert alert-warning" role="alert">
+                Are you sure you wan't to<br> <strong>PURGE <u>{{$title}}</u> Tab?</strong>
+                <input type="hidden" value="{{$title}}" name="tag">
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-warning">Purge</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</form>
+<!-- --- -->
 <table id="tabel" class="table table-striped table-bordered">
 <thead>
         <tr>

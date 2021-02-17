@@ -49,4 +49,35 @@ class inputController extends Controller
                 $data->save();
                 return redirect()->back();
     }
+    public function delete(Request $req) {
+
+        $id = Auth::user()->id;
+        $tags = Tag::select('tags')
+                   ->where('user_id', request()->user()->id)
+                   ->where('tags',$req->tag)
+                   ->delete();
+        $data = Main::select('name','url','time','img','img_url')
+                    ->where('user_id',$id)
+                    ->where('type',$req->tag)
+                    ->delete();
+        return redirect()->back();
+    }
+    public function edit(Request $req) {
+        $id = Auth::user()->id;
+        $tags = Tag::where('user_id', request()->user()->id)
+                   ->where('tags',$req->old)
+                   ->update(['tags'=>$req->new]);
+
+        $data = Main::where('user_id',$id)
+                    ->where('type',$req->old)
+                    ->update(['type'=>$req->new]);
+        return redirect()->back();
+    }
+    public function purge(Request $req) {
+        $id = Auth::user()->id;
+        $data = Main::where('user_id',$id)
+                    ->where('type',$req->tag)
+                    ->delete();
+        return redirect()->back();
+    }
 }
