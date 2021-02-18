@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Main;
 use App\Models\Tag;
 use OpenGraph;
-
+use Cloudinary\Api\Upload\UploadApi;
 class inputController extends Controller
 {
     public function input_table(Request $req)
@@ -15,25 +15,37 @@ class inputController extends Controller
         //return dd(request()->user());
         // switch ($req->input('action')) {
                 $data = new Main;
-                if(str_contains($req->url, "youtube.com/watch?v=")){
-                    $temp = OpenGraph::fetch($req->url);
+
+                $url = $req->url;
+
+                if(is_numeric($url)) $url = "https://nhentai.net/g/".$url;
+                
+                if(str_contains($url, "youtube.com/watch?v=")){
+                    $temp = OpenGraph::fetch($url);
                     if(isset($temp['title'])){
                         $data->name = $temp['title'];
                     }
                     $data->url = str_replace("watch?v=","embed/",$req->url);
-                } else if(str_contains($req->url, "https://") || str_contains($req->url, "http://")){
-                    $temp = OpenGraph::fetch($req->url);
+                } else if(str_contains($url, "https://") || str_contains($url, "http://")){
+                    $temp = OpenGraph::fetch($url);
                     if(isset($temp['title'])){
                         $data->name = $temp['title'];
                     }
                     if(isset($temp['image'])){
+                        //filling img_url table with image link
                         $data->img_url = $temp['image'];
+
+                        //gets binary image
+                        $temp_img = file_get_contents($temp['image']);
+                        
+                        //uploads it to cdn
+                        $data->img_url = cloudinary()->upload("data:image/png;base64,".base64_encode($temp_img))->getSecurePath();
                     }
                 }
                 if($req->name) {
                     $data->name = $req->name;
                 }
-                $data->url = $req->url;
+                $data->url = $url;
                 $data->user_id = request()->user()->id;
                 $data->type = $req->select_tag;
                 

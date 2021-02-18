@@ -98,7 +98,7 @@
 
                     <?php elseif($isTouch = isset($item->img_url)) : ?>
                             <a onclick="window.open(this.href); return false;" href = {{ $item->url }}>
-                            <img src={{ $item->img_url }} alt="Image" width ="300px;" height="210px" atl="Image">
+                            <embed type="image/jpg" src={{ $item->img_url }}>
                     
                     <?php else : ?>
                             <a onclick="window.open(this.href); return false;" href = {{ $item->url }}>{{  $item->name }}</a>

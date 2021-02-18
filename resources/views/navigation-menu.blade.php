@@ -35,7 +35,7 @@
                 <div class="plus-btn-not-resp">
                         <button class="add-tag btn btn-outline-success"
                         data-toggle="modal" data-target="#add-tag-modal">
-                            +<span class="glyphicon glyphicon-star"></span>
+                        +<i class="bi bi-plus-circle"></i>
                         </button>
                 </div>
                 <!-- End Button -->
@@ -187,7 +187,7 @@
                         <div class="plus-btn-resp">
                                 <button class="add-tag btn btn-outline-success"
                                 data-toggle="modal" data-target="#add-tag-modal">
-                                    +<span class="glyphicon glyphicon-star"></span>
+                                    +<span class="glyphicon glyphicon-plus"></span>
                                 </button>
                         </div>
 

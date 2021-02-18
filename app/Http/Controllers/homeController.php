@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Main;
 use App\Models\Tag;
+use Cloudinary\Api\Upload\UploadApi;
 class homeController extends Controller
 {
     public function index()
@@ -32,7 +33,6 @@ class homeController extends Controller
     }
     public function addTag(Request $req)
     {   
-        // return dd(request()->user());
         $add = new Tag;
         $add->user_id = request()->user()->id;
         $add->username = request()->user()->name;
@@ -42,8 +42,7 @@ class homeController extends Controller
     }
     public function view($tag)
     {
-// navbar data
-//-----------------------------------------------------------------------
+// navbar data----------------------------------------------------------
         $nav_types = Tag::select('tags')
                    ->where('user_id', request()->user()->id)
                    ->get();
