@@ -4,6 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <meta itemprop="og:title" content="Savelink - Save your links!">
+        <meta itemprop="og:description" content="Savelink is an app where you can store and manage your precious links!">
+        <meta itemprop="og:image" content="{{asset('img/logo2.png')}}">
         
         <meta property="og:title" content="Savelink - Save your links!">
         <meta property="og:description" content="Savelink is an app where you can store and manage your precious links!">
