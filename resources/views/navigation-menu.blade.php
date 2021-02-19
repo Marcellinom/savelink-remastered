@@ -214,14 +214,15 @@
                 @endif
 
                 <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-white">
+                        {{ Auth::user()->name }} - <span class="font-medium text-sm text-gray-400">{{ Auth::user()->email }}</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="mt-3 space-y-1">
+            <div class="mt-3 space-y-1 resp-tag-button">
                 <!-- Account Management -->
-                <x-jet-responsive-nav-link href="{{ route('account') }}" :active="request()->routeIs('profile.show')" class="text-sm text-white">
+                <x-jet-responsive-nav-link href="{{ route('account') }}" :active="request()->routeIs('profile.show')" class="tag-item btn btn-outline-danger">
                     {{ __('Profile') }}
                 </x-jet-responsive-nav-link>
 
@@ -235,7 +236,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-jet-responsive-nav-link class="text-sm text-white" 
+                    <x-jet-responsive-nav-link class="tag-item btn btn-outline-danger"
                                     href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                     this.closest('form').submit();">
