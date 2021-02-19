@@ -17,7 +17,7 @@ class CreateTagsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('username');
-            $table->string('tags');
+            $table->string('tags')->unique();
             $table->timestamps();
         });
     }

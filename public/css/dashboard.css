@@ -48,6 +48,7 @@
 .card.bg-color {
     background-color: #3a3a50;
 }
+/*input section*/
 .custom-select {
     border-radius: 20px;
     border-radius: 20px;
@@ -58,7 +59,24 @@
 .custom-input {
     border-radius: 20px;
     height:37px;
+    width:300px;
 }
+.input-wrapper>div{
+    height:50px;
+}
+.input-button{
+    transform: translateX(40px);
+}
+.input-button>input{
+    transform: translateY(13px);
+}
+.input-button>label{
+    transform: translateY(4px);
+}
+.input-button>input[type=checkbox]:checked + label {
+    color: red;  
+}
+/*end of input section*/
 .title-header {
     font-size:30px;
     color:red;

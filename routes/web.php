@@ -27,6 +27,9 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('input', [inputController::Class,'input_table']);
         Route::post('/addTag', [homeController::class, 'addTag'])->name('addTag');
         Route::post('/delete', [inputController::Class,'delete'])->name('delete');
+        Route::post('/dcontent', [inputController::Class,'deleteContent'])->name('dcontent');
+        Route::post('/econtent', [inputController::Class,'editContent'])->name('econtent');
+        Route::post('/mcontent', [inputController::Class,'moveContent'])->name('mcontent');
         Route::post('/edit', [inputController::Class,'edit'])->name('edit');
         Route::post('/purge', [inputController::Class,'purge'])->name('purge');
     });

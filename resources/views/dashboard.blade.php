@@ -7,28 +7,36 @@
     </x-slot>
 <div class="hidden-input">
     <div class="py-12">
-        <div style="width:300px; margin: -100px 0 0 -150px; top: 50%; left: 50%;  position:absolute;">
+        <div style="max-width:400px;max-height:400px; margin: auto; top: 50%; left: 50%;">
             <div class="overflow-hidden shadow-xl sm:rounded-lg">
             <div class="p-2 sm:px-20 input bg-color shadow">
 @if (session('alert'))
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                      <span type="button" class="" data-dismiss="alert" aria-label="Close">
-                        <strong>Warning!</strong> {{ session('alert') }}
-                      </span>
-                    </div>
+<div style="text-align: center;" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <span type="button" class="" data-dismiss="alert" aria-label="Close">
+    <strong>Warning!</strong> {{ session('alert') }}
+  </span>
+</div>
+@elseif(session('alert_danger'))
+<div style="text-align: center;" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <span type="button" class="" data-dismiss="alert" aria-label="Close">
+    <strong>Warning!</strong> {{ session('alert_danger') }}
+  </span>
+</div>
 @endif
 
-<img src="{{asset('img/logo.png')}}" width="300px">
+      <img src="{{asset('img/logo.png')}}" width="300px" style="margin:auto;">
         <form action="/input" method="post">
           @csrf
           <div class="row">
-            <h2 style="text-align: center;">
-                <div class="input-title">
-                  <input class="custom-input" type="text" placeholder="Name(optional)" name="name"></input>
-                </div>
-                <div class="input-url">
-                  <input class="custom-input" type="text" placeholder="url" name="url"></input>
-                </div>
+            <p2 style="text-align: center;">
+              <div class="input-wrapper">
+                  <div class="input-title">
+                    <input class="custom-input" type="text" placeholder="Name(optional)" name="name"></input>
+                  </div>
+                  <div class="input-url">
+                    <input class="custom-input" type="text" placeholder="url" name="url"></input>
+                  </div>
+              </div>
                 <div>
                   <select 
                   name="select_tag"
@@ -48,7 +56,12 @@
                   type="submit" 
                   class="btn btn-outline-success mt-2.5" 
                   style="padding: 5px 31px;">Save Link!</button>
-                </div>
+                  <input class="form-check-input ml-2" type="checkbox" value=1 name="nsfw" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    NSFW
+                  </label>
+                </div>  
+              <br>
            </div>
         </form>  
     </div>

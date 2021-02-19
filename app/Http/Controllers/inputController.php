@@ -12,13 +12,16 @@ class inputController extends Controller
 {
     public function input_table(Request $req)
     {
-        //return dd(request()->user());
-        // switch ($req->input('action')) {
+        if($req->select_tag == "Add-Tag"){
+            return redirect()->back()->with('alert', "please valid Tag!");
+        }
                 $data = new Main;
 
                 $url = $req->url;
-
+                
                 if(is_numeric($url)) $url = "https://nhentai.net/g/".$url;
+                
+                $data->url = $url;
                 
                 if(str_contains($url, "youtube.com/watch?v=")){
                     $temp = OpenGraph::fetch($url);
@@ -34,18 +37,18 @@ class inputController extends Controller
                     if(isset($temp['image'])){
                         //filling img_url table with image link
                         $data->img_url = $temp['image'];
-
-                        //gets binary image
-                        $temp_img = file_get_contents($temp['image']);
-                        
-                        //uploads it to cdn
-                        $data->img_url = cloudinary()->upload("data:image/png;base64,".base64_encode($temp_img))->getSecurePath();
+                        if(isset($req->nsfw)){
+                            //gets binary image
+                            $temp_img = file_get_contents($temp['image']);
+                            
+                            //uploads it to cdn
+                            $data->img_url = cloudinary()->upload("data:image/png;base64,".base64_encode($temp_img))->getSecurePath();
+                        }
                     }
                 }
                 if($req->name) {
                     $data->name = $req->name;
                 }
-                $data->url = $url;
                 $data->user_id = request()->user()->id;
                 $data->type = $req->select_tag;
                 
@@ -62,7 +65,6 @@ class inputController extends Controller
                 return redirect()->back();
     }
     public function delete(Request $req) {
-
         $id = Auth::user()->id;
         $tags = Tag::select('tags')
                    ->where('user_id', request()->user()->id)
@@ -90,6 +92,72 @@ class inputController extends Controller
         $data = Main::where('user_id',$id)
                     ->where('type',$req->tag)
                     ->delete();
+        return redirect()->back();
+    }
+    public function deleteContent(Request $req) {
+                Main::where('id',$req->delete_id)
+                    ->delete();
+        return redirect()->back();
+    }
+    public function moveContent(Request $req) {
+        if($req->select_tag == "Add-Tag"){
+            return redirect()->back()->with('alert', "please choose a valid Tag!");
+        }
+        Main::where('id', $req->move_id)
+            ->update(['type' => $req->select_tag]);
+    return redirect()->back();
+    }
+    public function editContent(Request $req) {
+        if($req->new_title == $req->old_title && $req->new_url == $req->old_url) {
+            return redirect()->back();
+        }
+        if($req->new_url != $req->old_url){
+            $url = $req->new_url;
+            if(is_numeric($url)) $url = "https://nhentai.net/g/".$url;
+
+            if(str_contains($url, "youtube.com/watch?v=")){
+                $temp = OpenGraph::fetch($url);
+                if(isset($temp['title'])){
+                    $title = $temp['title'];
+                }
+                $url = str_replace("watch?v=","embed/",$url);
+            } else if(str_contains($url, "https://") || str_contains($url, "http://")){
+                $temp = OpenGraph::fetch($url);
+                if(isset($temp['title'])){
+                    $title = $temp['title'];
+                }
+                if(isset($temp['image'])){
+                    //filling img_url table with image link
+                $img_url = $temp['image'];
+                    // if(isset($req->nsfw)){
+                    if(0){
+                        //gets binary image
+                        $temp_img = file_get_contents($temp['image']);
+                        
+                        //uploads it to cdn
+                        $data->img_url = cloudinary()->upload("data:image/png;base64,".base64_encode($temp_img))->getSecurePath();
+                    }
+                }
+            }
+            Main::where('id',$req->edit_id)
+                ->update([
+                'name' => isset($title)?$title:$req->new_title,
+                'url' => isset($url)?$url:$req->new_title,
+                'img_url' => isset($img_url)?$img_url:null
+                ]);
+        }
+        if($req->new_title != $req->old_title){
+            if($req->new_title == null){
+                if(str_contains($req->new_url, "https://") || str_contains($req->new_url, "http://")){
+                    $temp = OpenGraph::fetch($req->new_url);
+                    $req->new_title = $temp['title'];
+                }
+            }
+            Main::where('id',$req->edit_id)
+            ->update([
+                'name' => $req->new_title
+                ]);
+        }
         return redirect()->back();
     }
 }

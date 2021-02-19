@@ -33,6 +33,12 @@ class homeController extends Controller
     }
     public function addTag(Request $req)
     {   
+        if($req->add == null) {
+            return redirect()->back()->with('alert_danger', "New Tag name cannot be empty!!");
+        }
+        if(isset(Tag::where('tags',$req->add)->get()[0])){
+            return redirect()->back()->with('alert_danger', "Tag Already Exist!!");
+        } 
         $add = new Tag;
         $add->user_id = request()->user()->id;
         $add->username = request()->user()->name;
@@ -52,7 +58,7 @@ class homeController extends Controller
         }
 //-----------------------------------------------------------------------
         $id = Auth::user()->id;
-        $data = Main::select('name','url','time','img_url')
+        $data = Main::select('name','url','time','img_url', 'id')
                     ->where('user_id',$id)
                     ->where('type',$tag)
                     ->get();
