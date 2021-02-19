@@ -22,7 +22,12 @@
                         @foreach($data as $tag)
                         <div>
                             <x-jet-nav-link href="{{ route('view', ['tag' => $tag])}}" class="desktop btn btn-outline-danger">
-                                {{ $tag }}
+                                <span class="text-inside-button">
+                                    {{ $tag }}
+                                </span>
+                                @if(isset($data_nsfw[$tag]))
+                                    <mark class="mark-inside-button"><b>(NSFW)</b></mark>
+                                @endif
                             </x-jet-nav-link>
                         </div>
                         @endforeach
@@ -178,6 +183,11 @@
                         <div>
                             <x-jet-nav-link href="{{ route('view', ['tag' => $tag])}}" class="tag-item btn btn-outline-danger">
                                 {{ $tag }}
+                                <div class="nsfw-mark">
+                                    @if(isset($data_nsfw[$tag]))
+                                    <mark class="mark-inside-button-resp"><b>(NSFW)</b></mark>
+                                    @endif
+                                </div>
                             </x-jet-nav-link>
                         </div>
                         <br>

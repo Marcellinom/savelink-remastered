@@ -13,6 +13,7 @@ class Tag extends Model
         'user_id',
         'username',
         'tags',
+        'nsfw',
     ];
     public function main(){
         return $this->hasMany(Main::class);

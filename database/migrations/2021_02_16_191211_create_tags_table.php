@@ -18,6 +18,7 @@ class CreateTagsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('username');
             $table->string('tags')->unique();
+            $table->string('nsfw')->nullable();
             $table->timestamps();
         });
     }

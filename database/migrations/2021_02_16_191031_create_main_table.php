@@ -21,7 +21,7 @@ class CreateMainTable extends Migration
             $table->string('url');
             $table->string('img_url')->nullable();
             $table->timestamp('time')->useCurrent();
-            $table->longText('img')->nullable();
+            $table->string('img')->nullable();
         });
     }
 

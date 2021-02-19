@@ -45,6 +45,11 @@
                 <header class="custom bg-header shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 title-header">
                       {{$title}} - Links
+                      @if(isset($nsfw))
+                      <span class="nsfw-tag sm:px-4" style="font-size:18px;">
+                        <mark style="background-color:red; border-radius:12px;">(NSFW)</mark>
+                      </span>
+                      @endif
                     </div>
                 </header>
               @endif
@@ -71,6 +76,10 @@
                     </div>
                     <input type="text" class="form-control" name="add"></input>
                   </div>
+                  <input class="form-check-input ml-2" type="checkbox" value=1 name="nsfw" id="check-nsfw-modal">
+                  <label class="form-check-label" for="check-nsfw-modal">
+                    NSFW
+                  </label>
                   </div>
                   <div class="modal-footer">
                   <button type="submit" class="btn btn-primary">Save</button>

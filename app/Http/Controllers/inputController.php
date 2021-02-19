@@ -15,7 +15,16 @@ class inputController extends Controller
         if($req->select_tag == "Add-Tag"){
             return redirect()->back()->with('alert', "please valid Tag!");
         }
-                $data = new Main;
+        if(isset($req->nsfw)){
+        $temp = Tag::select('nsfw')
+                   ->where('tags', $req->select_tag)
+                   ->where('user_id', Auth::user()->id)
+                   ->get();
+            if(!isset($temp[0]->nsfw)){
+                return redirect()->back()->with('alert', $req->select_tag." is not an NSFW Tag!!");
+            } 
+        }
+            $data = new Main;
 
                 $url = $req->url;
                 
@@ -38,6 +47,9 @@ class inputController extends Controller
                         //filling img_url table with image link
                         $data->img_url = $temp['image'];
                         if(isset($req->nsfw)){
+                            //add img field of nsfw
+                            $data->img = "nsfw";
+
                             //gets binary image
                             $temp_img = file_get_contents($temp['image']);
                             
@@ -49,7 +61,7 @@ class inputController extends Controller
                 if($req->name) {
                     $data->name = $req->name;
                 }
-                $data->user_id = request()->user()->id;
+                $data->user_id = Auth::user()->id;
                 $data->type = $req->select_tag;
                 
                 if($data->name == null && $data->url == null){
@@ -78,13 +90,21 @@ class inputController extends Controller
     }
     public function edit(Request $req) {
         $id = Auth::user()->id;
-        $tags = Tag::where('user_id', request()->user()->id)
+        if(isset($req->nsfw)){
+            Tag::where('user_id', $id)
                    ->where('tags',$req->old)
-                   ->update(['tags'=>$req->new]);
-
-        $data = Main::where('user_id',$id)
-                    ->where('type',$req->old)
-                    ->update(['type'=>$req->new]);
+                   ->update(['nsfw'=> "1", 'tags'=>$req->new]);
+            Main::where('user_id',$id)
+                   ->where('type',$req->old)
+                   ->update(['img'=> "1", 'type'=>$req->new]);
+        } else {
+         Tag::where('user_id', $id)
+            ->where('tags',$req->old)
+            ->update(['nsfw'=>null, 'tags'=>$req->new]);
+         Main::where('user_id',$id)
+            ->where('type',$req->old)
+            ->update(['img'=>null,'type'=>$req->new]);
+        }
         return redirect()->back();
     }
     public function purge(Request $req) {
@@ -103,14 +123,44 @@ class inputController extends Controller
         if($req->select_tag == "Add-Tag"){
             return redirect()->back()->with('alert', "please choose a valid Tag!");
         }
+        $nsfw_check = Tag::select('nsfw')
+                    ->where('tags', $req->select_tag)
+                    ->get()[0]->nsfw;
+        if(gettype($nsfw_check) != gettype($req->nsfw)){
+            if($nsfw_check){
+                return redirect()->back()->with('alert', "Tag destination is NSFW!");
+            } else {
+                return redirect()->back()->with('alert', "Link content is NSFW! and Tag destination isn't NSFW!!");
+            }
+        } 
         Main::where('id', $req->move_id)
             ->update(['type' => $req->select_tag]);
     return redirect()->back();
     }
+    
     public function editContent(Request $req) {
+        $temp = Tag::select('nsfw')
+        ->where('user_id', Auth::user()->id)
+        ->where('tags', $req->tag)
+        ->get()[0];
+        $selected = Main::select('img')
+                        ->where('id', $req->edit_id)
+                        ->get()[0];
+        if($req->nsfw != $selected->img){
+            if(null == $temp->nsfw){
+                return redirect()->back()->with('alert', "This is not an NSFW tag");
+            } else {
+                Main::where('id',$req->edit_id)
+                ->update([
+                'img' => $req->nsfw,
+                ]);
+            }
+        } 
+
         if($req->new_title == $req->old_title && $req->new_url == $req->old_url) {
             return redirect()->back();
         }
+
         if($req->new_url != $req->old_url){
             $url = $req->new_url;
             if(is_numeric($url)) $url = "https://nhentai.net/g/".$url;
@@ -129,8 +179,7 @@ class inputController extends Controller
                 if(isset($temp['image'])){
                     //filling img_url table with image link
                 $img_url = $temp['image'];
-                    // if(isset($req->nsfw)){
-                    if(0){
+                    if(isset($req->nsfw)){
                         //gets binary image
                         $temp_img = file_get_contents($temp['image']);
                         

@@ -60,9 +60,15 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="basic-addon1">Input New Tag</span>
                     </div>
-                    <input type="text" class="form-control" name="new"></input>
+                    <input type="text" class="form-control" name="new" value="{{$title}}"></input>
                     <input type="hidden" name="old" value="{{$title}}"></input>
                   </div>
+                  <input class="form-check-input ml-2" 
+                  type="checkbox" value=1 name="nsfw" 
+                  id="check-nsfw-modal" @if($nsfw_title->nsfw != null) checked @endif>
+                <label style="color:black;">
+                    NSFW
+                </label>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -158,8 +164,15 @@
                     <input type="text" class="form-control" name="new_url" value="{{$item->url}}"></input>
                     <input type="hidden" name="old_url" value="{{$item->url}}"></input>
                   </div>
+                  <input class="form-check-input ml-2" 
+                  type="checkbox" value=1 name="nsfw" 
+                  id="check-nsfw-modal" @if(isset($item->img)) checked @endif>
+                <label style="color:black;">
+                    NSFW
+                </label>
                   </div>
                   <div class="modal-footer">
+                  <input type="hidden" value="{{$title}}" name="tag">
                   <input type="hidden" value="{{$item->id}}" name="edit_id">
                   <input type="hidden" value="{{$item->img_url}}" name="old_img_url">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -198,6 +211,7 @@
                         </span>
                     </div>
                     <div class="modal-footer">
+                        <input type="hidden" value="{{$item->img}}" name="nsfw">
                         <input type="hidden" value="{{$item->id}}" name="move_id">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-success">Move</button>

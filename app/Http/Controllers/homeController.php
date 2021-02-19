@@ -10,26 +10,45 @@ class homeController extends Controller
 {
     public function index()
     {   
-        $tags = Tag::select('tags')
-                   ->where('user_id', request()->user()->id)
-                   ->get();
-        $data = [];
-        foreach($tags as $i=>$tag){
-            $data[$i] = $tag->tags;
+        $nav_types = Tag::select('tags')
+                        ->where('user_id', request()->user()->id)
+                        ->get();
+        $nav_nsfws = Tag::select('tags')
+                        ->where('user_id', request()->user()->id)
+                        ->where('nsfw', "1")
+                        ->get();
+        $tab = [];
+        foreach($nav_types as $i=>$nav_type){
+            $tab[$i] = $nav_type->tags;
         }
-        // return dd($data);
-        return view('dashboard')->with('data',$data);
+        $nsfw_mark = [];
+        foreach($nav_nsfws as $nav_nsfw){
+            $nsfw_mark[$nav_nsfw->tags] = "nsfw";
+        }
+        return view('dashboard')
+            ->with('data',$tab)
+            ->with('data_nsfw',$nsfw_mark);
     }
     public function account()
     {  
-        $tags = Tag::select('tags')
-                   ->where('user_id', request()->user()->id)
-                   ->get();
-        $data = [];
-        foreach($tags as $i=>$tag){
-            $data[$i] = $tag->tags;
+        $nav_types = Tag::select('tags')
+                        ->where('user_id', request()->user()->id)
+                        ->get();
+        $nav_nsfws = Tag::select('tags')
+                        ->where('user_id', request()->user()->id)
+                        ->where('nsfw', "1")
+                        ->get();
+        $tab = [];
+        foreach($nav_types as $i=>$nav_type){
+            $tab[$i] = $nav_type->tags;
         }
-        return view('account')->with('data',$data);
+        $nsfw_mark = [];
+        foreach($nav_nsfws as $nav_nsfw){
+            $nsfw_mark[$nav_nsfw->tags] = "nsfw";
+        }
+        return view('account')
+        ->with('data',$tab)
+        ->with('data_nsfw',$nsfw_mark);
     }
     public function addTag(Request $req)
     {   
@@ -43,6 +62,9 @@ class homeController extends Controller
         $add->user_id = request()->user()->id;
         $add->username = request()->user()->name;
         $add->tags = $req->input('add');
+        if(isset($req->nsfw)){
+            $add->nsfw = $req->nsfw;
+        } 
         $add->save();
         return redirect()->back();
     }
@@ -50,15 +72,26 @@ class homeController extends Controller
     {
 // navbar data----------------------------------------------------------
         $nav_types = Tag::select('tags')
-                   ->where('user_id', request()->user()->id)
-                   ->get();
+                        ->where('user_id', request()->user()->id)
+                        ->get();
+        $nav_nsfws = Tag::select('tags')
+                        ->where('user_id', request()->user()->id)
+                        ->where('nsfw', "1")
+                        ->get();
+            $title_nsfw = Tag::select('nsfw')
+                        ->where('tags', $tag)
+                        ->get()[0];
         $tab = [];
         foreach($nav_types as $i=>$nav_type){
             $tab[$i] = $nav_type->tags;
         }
+        $nsfw_mark = [];
+        foreach($nav_nsfws as $nav_nsfw){
+            $nsfw_mark[$nav_nsfw->tags] = "nsfw";
+        }
 //-----------------------------------------------------------------------
         $id = Auth::user()->id;
-        $data = Main::select('name','url','time','img_url', 'id')
+        $data = Main::select('name','url','time','img_url', 'id', 'img')
                     ->where('user_id',$id)
                     ->where('type',$tag)
                     ->get();
@@ -71,6 +104,8 @@ class homeController extends Controller
         return view('driver')
              ->with('list_items',$data)
              ->with('title', $tag)
-             ->with('data',$tab);
+             ->with('nsfw_title', $title_nsfw)
+             ->with('data',$tab)
+             ->with('data_nsfw',$nsfw_mark);
     }
 }

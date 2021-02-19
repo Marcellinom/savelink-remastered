@@ -6,7 +6,7 @@
 }
 .horizontal-scroll-wrapper{
     width: 100px;
-    height: 300px;
+    height: 350px;
     overflow-x:hidden;
     transform: rotate(-90deg) translateY(-100px);
     transform-origin: right top;
@@ -19,6 +19,27 @@
 }
 .desktop.btn.btn-outline-danger {
     width:80px;
+    max-width:80px;
+    max-height:40px;
+}
+.text-inside-button {
+    display: inline-block; /* so height and width actually take affect */
+    max-width: 70px; /* so overflow hidden works and keeps text on one row */
+    overflow: hidden;
+    white-space: nowrap;
+}
+.mark-inside-button {
+    background-color:red;
+    border-radius:12px;
+    font-size:5px;
+    transform: translateX(-50px) translateY(22px);
+    position:absolute;
+}
+.mark-inside-button-resp {
+    background-color:red;
+    border-radius:12px;
+    font-size:9px;
+    float:right;
 }
 .horizontal-scroll-wrapper::-webkit-scrollbar {
   display: none;
@@ -37,6 +58,7 @@
     text-align:center;
 }
 .tag-item {
+    text-align:center;
     width:300px;
 }
 .add-tag.btn.btn-outline-success {
@@ -73,7 +95,7 @@
 .input-button>label{
     transform: translateY(4px);
 }
-.input-button>input[type=checkbox]:checked + label {
+.input-button>input[id=flexCheckDefault]:checked + label {
     color: red;  
 }
 /*end of input section*/
