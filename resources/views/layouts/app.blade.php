@@ -4,13 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        
         <meta property="og:title" content="Savelink - Save your links!">
         <meta property="og:description" content="Savelink is an app where you can store and manage your precious links!">
         <meta property="og:image" content="{{asset('img/logo2.png')}}">
-        <meta name="twitter:title" content="Savelink - Save your links!">
-        <meta name="twitter:description" content="Savelink is an app where you can store and manage your precious links!">
-        <meta name="twitter:image" content="{{asset('img/logo2.png')}}">
-        <meta name="twitter:card" content="{{asset('img/logo2.png')}}">
+
         <title>{{isset($title)? $title:(request()->routeIs('account')?"Profile":"Home")}} - Savelink</title>
 
         <!-- Fonts -->
