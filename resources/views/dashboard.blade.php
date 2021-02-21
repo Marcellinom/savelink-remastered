@@ -13,7 +13,11 @@
 @if (session('alert'))
 <div style="text-align: center;" class="alert alert-warning alert-dismissible fade show" role="alert">
   <span type="button" class="" data-dismiss="alert" aria-label="Close">
-    <strong>Warning!</strong> {{ session('alert') }}
+    <strong>Warning!</strong> 
+    @if(session('alert_underline')) 
+      <u>{{ session('alert_underline') }}</u> 
+    @endif 
+    {{ session('alert') }}
   </span>
 </div>
 @elseif(session('alert_danger'))

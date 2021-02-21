@@ -17,11 +17,14 @@ class inputController extends Controller
         if($req->select_tag == "Add-Tag"){
             return redirect()->back()->with('alert', "please valid Tag!");
         }
-        if(isset($req->nsfw)){
         $temp = Tag::select('nsfw')
                    ->where('tags', $req->select_tag)
                    ->where('user_id', Auth::user()->id)
                    ->get();
+        if(isset($temp[0]->nsfw) && !isset($req->nsfw)){
+            return redirect()->back()->with('alert_underline',$req->select_tag)->with('alert'," Tag is NSFW!!");
+        }
+        if(isset($req->nsfw)){
             if(!isset($temp[0]->nsfw)){
                 return redirect()->back()->with('alert', $req->select_tag." is not an NSFW Tag!!");
             } 
