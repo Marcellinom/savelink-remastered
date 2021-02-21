@@ -4,12 +4,40 @@
 .custom.bg-body {
     background-color: #332f2d;
 }
+.logo:hover{
+    background-color:#822424;
+    transform: translateX(30px);
+    border-radius:3px;
+}
+.logo:focus{
+    background-color:#822424;
+    transform: translateX(30px);
+    border-radius:50%;
+}
+.logo:hover img{
+    background-color:#822424;
+    transform: rotate(-40deg);
+    border-radius:3px;
+}
+.logo:focus img{
+    background-color:#822424;
+    transform: rotate(-80deg);
+    border-radius:50%;
+}
+.logo{
+
+    transform: translateX(30px);
+}
+.logo img{
+    transition:.2s;
+}
 .horizontal-scroll-wrapper{
     width: 100px;
     height: 350px;
     overflow-x:hidden;
     transform: rotate(-90deg) translateY(-100px);
     transform-origin: right top;
+    position:absolute;
 }
 .horizontal-scroll-wrapper > div {
     width: 100px;
@@ -21,6 +49,13 @@
     width:80px;
     max-width:80px;
     max-height:40px;
+    transition:.3s;
+}
+.desktop.btn.btn-outline-danger:hover {
+    border-radius:20px;
+}
+.desktop.btn.btn-outline-danger:active {
+    border-radius:50%;
 }
 .text-inside-button {
     display: inline-block; /* so height and width actually take affect */
@@ -62,7 +97,21 @@
     width:300px;
 }
 .add-tag.btn.btn-outline-success {
+    transform:translateY(1px);
+    height:35px;
+    width:35px;
     border-radius: 50%;
+}
+.add-tag.btn.btn-outline-success:hover span {
+    transition:.4s;
+    position:absolute;
+    transform:translateY(-23px)translateX(-9px)rotate(90deg);
+    font-size:30px;
+}
+.plus-text {
+    position:absolute;
+    transform:translateY(-23px)translateX(-9px);
+    font-size:30px;
 }
 .input.bg-color {
     background-color: #3a3a50;
@@ -74,11 +123,24 @@
 .custom-select {
     border-radius: 20px;
     border-radius: 20px;
+    width: 90px; 
+    height:30px;
+    font-size: 10px;
+    transition:.3s;
+}
+.custom-select:focus {
+    border-radius: 6px;
     width: 150px; 
     height:30px;
     font-size: 10px;
 }
 .custom-input {
+    transition:.3s;
+    border-radius: 20px;
+    height:37px;
+    width:200px;
+}
+.custom-input:focus {
     border-radius: 20px;
     height:37px;
     width:300px;
@@ -114,3 +176,8 @@
     font-size: 8px; 
     text-align: center; 
 } 
+.custom.alert{
+    margin:auto;
+    width:1000px;
+}
+

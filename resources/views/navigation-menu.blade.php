@@ -1,12 +1,12 @@
 <nav x-data="{ open: false }" style="background-color:#4b1c2e"class="shadow">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- <div> -->
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
-                        <img src="{{asset('img/logo2.png')}}" alt="logo" width="45px">
+                    <a class="logo" href="{{ route('home') }}">
+                        <img src="{{asset('img/logo2.png')}}" alt="logo" width="46" height="30">
                     </a>
                 </div>
 
@@ -40,7 +40,8 @@
                 <div class="plus-btn-not-resp">
                         <button class="add-tag btn btn-outline-success"
                         data-toggle="modal" data-target="#add-tag-modal">
-                        +<i class="bi bi-plus-circle"></i>
+                        <span class="plus-text">+</span>
+                        <i class="bi bi-plus-circle"></i>
                         </button>
                 </div>
                 <!-- End Button -->
@@ -162,7 +163,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">

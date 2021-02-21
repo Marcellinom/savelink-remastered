@@ -45,7 +45,7 @@
                 <header class="custom bg-header shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 title-header">
                       {{$title}} - Links
-                      @if(isset($nsfw))
+                      @if($nsfw_mark != null)
                       <span class="nsfw-tag sm:px-4" style="font-size:18px;">
                         <mark style="background-color:red; border-radius:12px;">(NSFW)</mark>
                       </span>

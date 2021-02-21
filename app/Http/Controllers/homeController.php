@@ -78,9 +78,6 @@ class homeController extends Controller
                         ->where('user_id', request()->user()->id)
                         ->where('nsfw', "1")
                         ->get();
-            $title_nsfw = Tag::select('nsfw')
-                        ->where('tags', $tag)
-                        ->get()[0];
         $tab = [];
         foreach($nav_types as $i=>$nav_type){
             $tab[$i] = $nav_type->tags;
@@ -90,6 +87,9 @@ class homeController extends Controller
             $nsfw_mark[$nav_nsfw->tags] = "nsfw";
         }
 //-----------------------------------------------------------------------
+        $title_nsfw = Tag::select('nsfw')
+                         ->where('tags', $tag)
+                         ->get();
         $id = Auth::user()->id;
         $data = Main::select('name','url','time','img_url', 'id', 'img')
                     ->where('user_id',$id)
@@ -104,7 +104,8 @@ class homeController extends Controller
         return view('driver')
              ->with('list_items',$data)
              ->with('title', $tag)
-             ->with('nsfw_title', $title_nsfw)
+             ->with('nsfw_title', $title_nsfw[0])
+             ->with('nsfw_mark', $title_nsfw[0]->nsfw)
              ->with('data',$tab)
              ->with('data_nsfw',$nsfw_mark);
     }

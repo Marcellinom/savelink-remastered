@@ -1,22 +1,23 @@
 @extends('layouts/app')
 @section('content')
-<div class="main-body py-12">
+<div class="main-body py-7">
+    @if (session('alert'))
+    <div style="text-align: center;" class="custom alert alert-warning alert-dismissible fade show" role="alert">
+      <span type="button" class="" data-dismiss="alert" aria-label="Close">
+        <strong>Warning!</strong> {{ session('alert') }}
+      </span>
+    </div>
+    @elseif(session('alert_danger'))
+    <div style="text-align: center;" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <span type="button" class="" data-dismiss="alert" aria-label="Close">
+        <strong>Warning!</strong> {{ session('alert_danger') }}
+      </span>
+    </div>
+    @endif
+    <br>
     <div style="card bg-table">
         <div class="p-2 sm:px-20 view bg-color shadow t">
 
-@if (session('alert'))
-<div style="text-align: center;" class="alert alert-warning alert-dismissible fade show" role="alert">
-  <span type="button" class="" data-dismiss="alert" aria-label="Close">
-    <strong>Warning!</strong> {{ session('alert') }}
-  </span>
-</div>
-@elseif(session('alert_danger'))
-<div style="text-align: center;" class="alert alert-danger alert-dismissible fade show" role="alert">
-  <span type="button" class="" data-dismiss="alert" aria-label="Close">
-    <strong>Warning!</strong> {{ session('alert_danger') }}
-  </span>
-</div>
-@endif
             <div class="custom table-responsive text-white">
                 <button type="button" class="btn btn-success ml-2 btn-circle btn-sm"
                 data-toggle="modal" data-target="#purge{{str_replace(" ","-",$title)}}"></button>

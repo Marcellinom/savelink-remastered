@@ -12,6 +12,8 @@ class inputController extends Controller
 {
     public function input_table(Request $req)
     {
+        $data = new Main;
+
         if($req->select_tag == "Add-Tag"){
             return redirect()->back()->with('alert', "please valid Tag!");
         }
@@ -23,9 +25,9 @@ class inputController extends Controller
             if(!isset($temp[0]->nsfw)){
                 return redirect()->back()->with('alert', $req->select_tag." is not an NSFW Tag!!");
             } 
+            //add img field of nsfw
+            $data->img = "1";
         }
-            $data = new Main;
-
                 $url = $req->url;
                 
                 if(is_numeric($url)) $url = "https://nhentai.net/g/".$url;
@@ -47,8 +49,6 @@ class inputController extends Controller
                         //filling img_url table with image link
                         $data->img_url = $temp['image'];
                         if(isset($req->nsfw)){
-                            //add img field of nsfw
-                            $data->img = "nsfw";
 
                             //gets binary image
                             $temp_img = file_get_contents($temp['image']);
@@ -127,10 +127,11 @@ class inputController extends Controller
                     ->where('tags', $req->select_tag)
                     ->get()[0]->nsfw;
         if(gettype($nsfw_check) != gettype($req->nsfw)){
-            if($nsfw_check){
-                return redirect()->back()->with('alert', "Tag destination is NSFW!");
-            } else {
+            if(!$nsfw_check){
                 return redirect()->back()->with('alert', "Link content is NSFW! and Tag destination isn't NSFW!!");
+            } else {
+                Main::where('id', $req->move_id)
+                    ->update(['img' => "1"]);
             }
         } 
         Main::where('id', $req->move_id)
@@ -142,12 +143,12 @@ class inputController extends Controller
         $temp = Tag::select('nsfw')
         ->where('user_id', Auth::user()->id)
         ->where('tags', $req->tag)
-        ->get()[0];
+        ->get();
         $selected = Main::select('img')
                         ->where('id', $req->edit_id)
                         ->get()[0];
         if($req->nsfw != $selected->img){
-            if(null == $temp->nsfw){
+            if(null == $temp[0]->nsfw){
                 return redirect()->back()->with('alert', "This is not an NSFW tag");
             } else {
                 Main::where('id',$req->edit_id)
