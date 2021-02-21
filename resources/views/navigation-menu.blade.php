@@ -1,5 +1,4 @@
-<nav x-data="{ open: false }" style="background-color:#4b1c2e;
-@if((new \Jenssegers\Agent\Agent())->isMobile())overflow-y:hidden;@endif"class="shadow">
+<nav x-data="{ open: false }" style="background-color:#4b1c2e;"class="shadow">
     <!-- Primary Navigation Menu -->
     <!-- <div> -->
         <div class="flex justify-between h-16">

@@ -34,12 +34,13 @@
 .horizontal-scroll-wrapper{
     width: 100px;
     height: 350px;
-    overflow-x:hidden;
+    overflow-x:scroll;
     transform: rotate(-90deg) translateY(-100px);
     transform-origin: right top;
     position:absolute;
 }
 .horizontal-scroll-wrapper > div {
+    flex: none;
     width: 100px;
     height: 100px;
     transform: rotate(90deg);
