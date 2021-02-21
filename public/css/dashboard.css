@@ -180,4 +180,6 @@
     margin:auto;
     width:1000px;
 }
-
+.mobile-nav {
+    transform: translateX(-10px);
+}
